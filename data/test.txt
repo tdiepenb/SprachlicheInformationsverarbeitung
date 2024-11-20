@@ -1,0 +1,2 @@
+Dies ist eine ({3}) Test Datei.
+Sie sollte 15 tokens und 14 types haben.

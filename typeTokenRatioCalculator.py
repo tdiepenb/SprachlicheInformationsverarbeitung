@@ -1,8 +1,5 @@
 import re
-import string
 
-
-# reads a file and returns it
 def read_file(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -19,8 +16,11 @@ def calculate_TTR(file):
     # entfernt ({*}) wo * eine zahl ist
     cleantext = re.sub(r'\(\{\d+\}\)', '', text)
 
+    # ersetzt ellipsis mit einem token, damit diese nicht als 3 token zählt
+    cleantext = cleantext.replace("...", "<ellipsis>")
+
     # fügt leerzeichen vor satzzeichen hinzu um diese als eigene Token zu zählen
-    cleantext = re.sub(r'([.,!?;:"\'()])', r' \1 ', cleantext)
+    #cleantext = re.sub(r'([.,!?;:"\'()])', r' \1 ', cleantext)
 
     # entfernt doppelte leerzeichen sowie leerzeichen am anfang und am ende
     cleantext = re.sub(r'\s+', ' ', cleantext).strip()
@@ -33,17 +33,17 @@ def calculate_TTR(file):
     types = set(tokens)
     numtypes = len(types)
 
-
     type_token_ratio = numtypes / numtokens
 
-    return {
-        "Filename:": file,
-        "Anzahl Tokens": numtokens,
-        "Anzahl Types": numtypes,
-        "Type Token Ratio": type_token_ratio
-    }
+    returnString = f"Die Datei {file} hat eine Type Token Ratio von {type_token_ratio}\nmit {numtypes} Typen und {numtokens} Tokens"
+
+    return returnString
 
 
-filePathTest = "./data/test.txt"
+filePathTest = "./data/AliceWeidelAFD.txt"
+result = calculate_TTR(filePathTest)
+print(result)
+
+filePathTest = "./data/FriedrichMerzCDU.txt"
 result = calculate_TTR(filePathTest)
 print(result)
