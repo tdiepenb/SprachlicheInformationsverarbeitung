@@ -39,6 +39,11 @@ print(f"x_test shape: {x_test.shape}")
 bayesModel = CategoricalNB()
 bayesModel.fit(x_train, y_train)
 
+print(f"feature_log_prob_ shape: {len(bayesModel.feature_log_prob_)}")
+# Print unique class labels
+print(f"Unique classes in y_train: {np.unique(y_train)}")
+print(f"Unique classes in y_test: {np.unique(y_test)}")
+
 bayesPredict = bayesModel.predict(x_test)
 
 
